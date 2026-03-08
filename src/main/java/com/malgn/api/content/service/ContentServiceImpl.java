@@ -43,7 +43,7 @@ public class ContentServiceImpl implements ContentService {
         String creatorName = getUser(authorization).getUsername();
         String title = contentCreateRequest.getTitle();
         String description = contentCreateRequest.getDescription();
-
+        checkValid(title, description);
         Content content = Content.of(
                 user,
                 title,
@@ -60,6 +60,8 @@ public class ContentServiceImpl implements ContentService {
 
         Content content = getContent(contentId);
         User modifier = getUser(authorization);
+
+        checkValid(content.getTitle(), content.getDescription());
 
         if ( !(modifier.getRole() == UserRole.ADMIN || modifier.getId().equals(content.getUser().getId())) ) { // admin or creator
             throw new CustomException(ResponseCode.NOT_CREATED_USER);
@@ -169,7 +171,13 @@ public class ContentServiceImpl implements ContentService {
     }
 
     public void deleteViewCount(Long contentId) {
-        redisUtil.deleteValue("contentViewCnt:" + contentId);
+        redisUtil.deleteValue(VIEW_CNT_PREFIX + contentId);
+    }
+
+    public void checkValid(String title, String description) {
+        if (title == null || description == null) {
+            throw new CustomException(ResponseCode.VALID_ERROR);
+        }
     }
 
 

@@ -1,16 +1,17 @@
 package com.malgn.api.content.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class ContentCreateRequest {
 
-    @NotBlank
+    @NotNull
     private final String title;
 
-    @NotBlank
+    @NotNull
     private final String description;
 
     @Builder

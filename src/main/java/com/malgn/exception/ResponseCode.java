@@ -20,6 +20,8 @@ public enum ResponseCode {
     // Content
     CONTENT_NOT_FOUND("CON-ERR-001", HttpStatus.NOT_FOUND, "콘텐츠를 찾을 수 없습니다."),
     NOT_CREATED_USER("CON-ERR-002", HttpStatus.BAD_REQUEST,"작성자가 아닙니다."),
+    TITLE_NOT_NULL("CON-ERR-003", HttpStatus.BAD_REQUEST,"작성자가 아닙니다."),
+    DESCRIPTION_NOT_NULL("CON-ERR-004", HttpStatus.BAD_REQUEST,"작성자가 아닙니다."),
 
     // Auth
     PASSWORD_INCORRECT("AUT-ERR-001", HttpStatus.UNAUTHORIZED, "비밀번호가 틀렸습니다"),
@@ -39,7 +41,8 @@ public enum ResponseCode {
     BAD_REQUEST("GLB-ERR-001", HttpStatus.NOT_FOUND, "잘못된 요청입니다."),
     METHOD_NOT_ALLOWED("GLB-ERR-002", HttpStatus.METHOD_NOT_ALLOWED, "허용되지 않은 메서드입니다."),
     INTERNAL_SERVER_ERROR("GLB-ERR-003", HttpStatus.INTERNAL_SERVER_ERROR, "내부 서버 오류입니다."),
-    NOT_FOUND("GLB-ERR-004", HttpStatus.NOT_FOUND, "요청하신 경로를 찾을 수 없습니다: ");
+    NOT_FOUND("GLB-ERR-004", HttpStatus.NOT_FOUND, "요청하신 경로를 찾을 수 없습니다: "),
+    VALID_ERROR("GLB-ERR-005", HttpStatus.CONFLICT, "유효성 검사에 실패했습니다.");
 
     private final String code;
     private final HttpStatus status;

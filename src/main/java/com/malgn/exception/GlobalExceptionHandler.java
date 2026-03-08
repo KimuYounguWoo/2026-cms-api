@@ -2,6 +2,7 @@ package com.malgn.exception;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -82,7 +83,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleNoResourceFoundException(NoResourceFoundException e) {
         final ErrorResponse errorResponse = ErrorResponse.of(ResponseCode.NOT_FOUND);
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(e.getStatusCode())
+                .body(errorResponse);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleCustomException(final DataIntegrityViolationException e) {
+        final ErrorResponse errorResponse = ErrorResponse.of(ResponseCode.VALID_ERROR);
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
                 .body(errorResponse);
     }
 
@@ -93,6 +102,5 @@ public class GlobalExceptionHandler {
                 .status(e.getResponseCode().getStatus())
                 .body(errorResponse);
     }
-
 
 }
