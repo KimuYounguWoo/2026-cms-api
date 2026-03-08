@@ -13,11 +13,10 @@ import lombok.*;
 
 
 @Entity
-@Table(name = "contents")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "contents")
 public class Content extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)

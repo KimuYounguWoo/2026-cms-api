@@ -8,10 +8,10 @@ import lombok.Getter;
 public class ContentCreateRequest {
 
     @NotBlank
-    private String title;
+    private final String title;
 
     @NotBlank
-    private String description;
+    private final String description;
 
     @Builder
     public ContentCreateRequest(String title, String description) {

@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public class ContentUpdateRequest {
     @NotBlank
-    private String title;
+    private final String title;
 
     @NotBlank
-    private String description;
+    private final String description;
 
 
     @Builder

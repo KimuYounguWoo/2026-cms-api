@@ -13,6 +13,7 @@ import com.malgn.domain.user.repository.UserRepository;
 import com.malgn.exception.CustomException;
 import com.malgn.exception.ResponseCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,28 +29,45 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RedisUtil redisUtil;
-    private final Duration expireTime = Duration.ofSeconds(864000); // 2 weeks
+
+    @Value("${jwt.refresh_exp}")
+    private Duration expireTime;
+
 
     @Override
     public LogoutResponse logout(String accessToken) {
-        jwtUtil.validateToken(accessToken);
-        redisUtil.deleteValue(jwtUtil.getUsername(accessToken));
-        Long userId = jwtUtil.getUserId(accessToken);
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ResponseCode.MEMBER_NOT_FOUND));
+        String token = jwtUtil.splitBearerToken(accessToken);
+        jwtUtil.validateToken(token);
+        redisUtil.deleteValue(jwtUtil.getUsername(token));
 
-        return LogoutResponse.of(userId, user.getUsername());
+        return LogoutResponse.of(
+                jwtUtil.getUserId(token),
+                jwtUtil.getUsername(token)
+        );
     }
 
     @Override
     public ReissueResponse reissue(String refreshToken) {
 
-        UserPrincipal userPrincipal = UserPrincipal.toPrincipal(getUser(jwtUtil.getUserId(refreshToken)));
+        String token = jwtUtil.splitBearerToken(refreshToken);
+        jwtUtil.validateToken(token);
 
-        jwtUtil.validateToken(refreshToken);
+        String username = jwtUtil.getUsername(token);
+
+        String savedToken = redisUtil.getValue(username);
+
+        if (savedToken == null || !savedToken.equals(token)) {
+            throw new CustomException(ResponseCode.NOT_FOUND_REFRESH_TOKEN);
+        }
+
+        Long userId = jwtUtil.getUserId(token);
+
+        UserPrincipal userPrincipal = UserPrincipal.toPrincipal(getUser(userId));
 
         String newRefreshToken = jwtUtil.createRefreshToken(userPrincipal);
         String newAccessToken = jwtUtil.createAccessToken(userPrincipal);
-        redisUtil.deleteValue(jwtUtil.getUsername(refreshToken));
+
+        redisUtil.deleteValue(jwtUtil.getUsername(token));
         redisUtil.setValues(userPrincipal.getUsername(), newRefreshToken, expireTime);
 
         return ReissueResponse.of(

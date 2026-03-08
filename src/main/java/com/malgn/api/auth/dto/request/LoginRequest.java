@@ -1,14 +1,13 @@
 package com.malgn.api.auth.dto.request;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class LoginRequest {
+
     @NotBlank
-    @Email
     private final String username;
 
     @NotBlank

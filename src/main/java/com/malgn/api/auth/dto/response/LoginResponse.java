@@ -1,23 +1,16 @@
 package com.malgn.api.auth.dto.response;
 
 import com.malgn.domain.user.entity.UserRole;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class LoginResponse {
-    @NotNull
-    String accessToken;
 
-    @NotNull
-    String refreshToken;
-
-    @NotNull
-    String username;
-
-    @NotNull
-    UserRole role;
+    private final String accessToken;
+    private final String refreshToken;
+    private final String username;
+    private final UserRole role;
 
     @Builder
     public LoginResponse(

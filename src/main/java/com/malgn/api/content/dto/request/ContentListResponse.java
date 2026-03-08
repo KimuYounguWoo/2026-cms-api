@@ -8,17 +8,17 @@ import java.time.LocalDateTime;
 @Getter
 public class ContentListResponse {
 
-    private Long id;
-    private String title;
-    private String description;
+    private final Long id;
+    private final String title;
+    private final String description;
 
-    private String createdBy;
-    private String lastModifiedBy;
+    private final String createdBy;
+    private final String lastModifiedBy;
 
-    private Long viewCnt;
+    private final Long viewCnt;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime lastModifiedAt;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime lastModifiedAt;
 
     @Builder
     public ContentListResponse(

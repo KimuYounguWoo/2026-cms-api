@@ -3,9 +3,9 @@ server:
   port: 8080
 
 jwt:
-  access_exp: 86400 # 24 hours
-  refresh_exp: 1209600 # 2 weeks
-  secret: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+  access_exp: 1800 # 30m
+  refresh_exp: 604800 # weeks
+  secret: "TBMFp3wdLyCcOUtJIqJkqyRPhpFhNxe2ig0rgZ2oj8a"
 
 ## spring
 spring:

@@ -2,18 +2,14 @@ package com.malgn.api.auth.dto.response;
 
 import com.malgn.api.auth.dto.request.SignUpRequest;
 import com.malgn.domain.user.entity.UserRole;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class SignUpResponse {
 
-    @NotBlank
-    private String username;
-
-    @NotBlank
-    private UserRole role;
+    private final String username;
+    private final UserRole role;
 
     @Builder
     public SignUpResponse(String username, UserRole role) {

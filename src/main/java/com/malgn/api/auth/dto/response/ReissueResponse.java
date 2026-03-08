@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public class ReissueResponse {
 
-    private String accessToken;
-    private String refreshToken;
+    private final String accessToken;
+    private final String refreshToken;
 
     @Builder
     public ReissueResponse(String accessToken, String refreshToken) {

@@ -9,13 +9,13 @@ import lombok.Getter;
 public class SignUpRequest {
 
     @NotBlank
-    private String username;
+    private final String username;
 
     @NotBlank
-    private String password;
+    private final String password;
 
     @NotBlank
-    private UserRole role;
+    private final UserRole role;
 
     @Builder
     public SignUpRequest(String username, String password, UserRole role) {
@@ -24,8 +24,7 @@ public class SignUpRequest {
         this.role = role;
     }
 
-    public static SignUpRequest of(
-            String username, String password, UserRole role) {
+    public static SignUpRequest of(String username, String password, UserRole role) {
         return SignUpRequest.builder().username(username).password(password).role(role).build();
     }
 

@@ -36,6 +36,7 @@ public class JwtUtil {
         this.refreshTokenExpTime = refreshTokenExpTime;
     }
 
+
     public String createAccessToken(UserPrincipal userPrincipal) {
         return createToken(userPrincipal, accessTokenExpTime);
     }
@@ -73,16 +74,14 @@ public class JwtUtil {
         try {
             Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
             return true;
-        } catch (SecurityException e) {
-            throw new CustomException(ResponseCode.INVALID_TOKEN); // Invalid JWT signature
-        } catch (MalformedJwtException e) {
-            throw new CustomException(ResponseCode.INVALID_TOKEN); // Invalid JWT signature
         } catch (ExpiredJwtException e) {
-            throw new CustomException(ResponseCode.EXPIRED_TOKEN); // Expired JWT token
+            throw new CustomException(ResponseCode.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException e) {
-            throw new CustomException(ResponseCode.UNSUPPORTED_TOKEN); // Unsupported JWT token
-        } catch (IllegalArgumentException e) {
-            throw new CustomException(ResponseCode.INVALID_HEADER_OR_COMPACT_JWT); // JWT token compact of handler are invalid
+            throw new CustomException(ResponseCode.UNSUPPORTED_TOKEN);
+        } catch (MalformedJwtException | SecurityException | IllegalArgumentException e) {
+            throw new CustomException(ResponseCode.INVALID_TOKEN);
+        } catch (Exception e) {
+            throw new CustomException(ResponseCode.INTERNAL_SERVER_ERROR);
         }
     }
     public Claims parseClaims(String accessToken) {
@@ -92,4 +91,9 @@ public class JwtUtil {
             return e.getClaims();
         }
     }
+
+    public String splitBearerToken(String token) {
+        return token.substring(7);
+    }
+
 }

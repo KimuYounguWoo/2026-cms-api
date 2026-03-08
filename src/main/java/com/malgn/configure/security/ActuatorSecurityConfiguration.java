@@ -2,24 +2,29 @@ package com.malgn.configure.security;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.boot.security.autoconfigure.actuate.web.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @RequiredArgsConstructor
 @Configuration
+@Order(1)
 public class ActuatorSecurityConfiguration {
 
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain actuatorSecurityFilterChain(HttpSecurity http) {
-        http.securityMatcher(EndpointRequest.toAnyEndpoint());
+    String[] userWhiteList = {"/actuator/health", "/actuator/info"};
 
-        http.authorizeHttpRequests(requests -> requests.anyRequest().permitAll());
+    @Bean
+    public SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher("/actuator/**")
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers(userWhiteList).permitAll()
+                        .anyRequest().hasRole("ADMIN")
+                )
+                .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }

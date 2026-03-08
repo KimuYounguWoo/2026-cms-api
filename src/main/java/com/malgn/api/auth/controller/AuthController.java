@@ -8,7 +8,6 @@ import com.malgn.api.auth.dto.response.ReissueResponse;
 import com.malgn.api.auth.dto.response.SignUpResponse;
 import com.malgn.api.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,20 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-@Slf4j
 public class AuthController {
 
     private final AuthService authService;
 
+
     // Guest Role
 
-    @PostMapping("/guest/auth/login")
+    // 로그인
+    @PostMapping("/auth/login")
     public ResponseEntity<LoginResponse> login(
             @RequestBody LoginRequest loginRequestDto) {
         return ResponseEntity.ok(authService.login(loginRequestDto));
     }
 
-    @PostMapping("/guest/auth/sign-up")
+    // 회원가입
+    @PostMapping("/auth/sign-up")
     public ResponseEntity<SignUpResponse> signup(
             @RequestBody SignUpRequest signUpRequest
     ) {
@@ -42,17 +43,19 @@ public class AuthController {
 
     // User Role
 
+    // 로그아웃
     @GetMapping("/user/auth/logout")
     public ResponseEntity<LogoutResponse> logout(
             @RequestHeader("Authorization") String accessToken
     ) {
-        return ResponseEntity.ok(authService.logout(accessToken.substring(7)));
+        return ResponseEntity.ok(authService.logout(accessToken));
     }
 
+    // 토큰 재발급
     @GetMapping("/user/auth/reissue")
     public ResponseEntity<ReissueResponse> reissue(
             @RequestHeader("Authorization") String refreshToken
     ) {
-        return ResponseEntity.ok(authService.reissue(refreshToken.substring(7)));
+        return ResponseEntity.ok(authService.reissue(refreshToken));
     }
 }

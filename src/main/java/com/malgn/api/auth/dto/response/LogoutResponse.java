@@ -7,9 +7,8 @@ import lombok.Getter;
 @Getter
 public class LogoutResponse {
 
-    private Long userId;
-    private String username;
-
+    private final Long userId;
+    private final String username;
 
     @Builder
     public LogoutResponse(Long userId, String username) {
