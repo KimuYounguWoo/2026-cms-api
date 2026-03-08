@@ -1,7 +1,7 @@
 package com.malgn.api.content.service;
 
 import com.malgn.api.content.dto.request.ContentCreateRequest;
-import com.malgn.api.content.dto.request.ContentListResponse;
+import com.malgn.api.content.dto.response.ContentListResponse;
 import com.malgn.api.content.dto.request.ContentUpdateRequest;
 import com.malgn.api.content.dto.response.ContentViewResponse;
 import org.springframework.data.domain.Page;

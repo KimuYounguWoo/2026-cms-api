@@ -1,7 +1,7 @@
 package com.malgn.api.content.service;
 
 import com.malgn.api.content.dto.request.ContentCreateRequest;
-import com.malgn.api.content.dto.request.ContentListResponse;
+import com.malgn.api.content.dto.response.ContentListResponse;
 import com.malgn.api.content.dto.request.ContentUpdateRequest;
 import com.malgn.api.content.dto.response.ContentViewResponse;
 import com.malgn.configure.jwt.JwtUtil;
@@ -137,7 +137,6 @@ public class ContentServiceImpl implements ContentService {
             return ContentListResponse.of(
                     content.getId(),
                     content.getTitle(),
-                    content.getDescription(),
                     content.getCreatedBy(),
                     content.getLastModifiedBy(),
                     content.getCreatedAt(),

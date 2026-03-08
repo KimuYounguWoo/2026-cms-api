@@ -1,4 +1,4 @@
-package com.malgn.api.content.dto.request;
+package com.malgn.api.content.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,6 @@ public class ContentListResponse {
 
     private final Long id;
     private final String title;
-    private final String description;
 
     private final String createdBy;
     private final String lastModifiedBy;
@@ -22,14 +21,13 @@ public class ContentListResponse {
 
     @Builder
     public ContentListResponse(
-            Long id, String title, String description,
+            Long id, String title,
             String createdBy, String lastModifiedBy,
             LocalDateTime createdAt, LocalDateTime lastModifiedAt,
             Long viewCnt
     ) {
         this.id = id;
         this.title = title;
-        this.description = description;
         this.createdBy = createdBy;
         this.lastModifiedBy = lastModifiedBy;
         this.createdAt = createdAt;
@@ -38,13 +36,13 @@ public class ContentListResponse {
     }
 
     public static ContentListResponse of(
-            Long id, String title, String description,
+            Long id, String title,
             String createdBy, String lastModifiedBy,
             LocalDateTime createdAt, LocalDateTime lastModifiedAt,
             Long viewCnt
     ) {
         return ContentListResponse.builder()
-                .id(id).title(title).description(description)
+                .id(id).title(title)
                 .createdBy(createdBy).lastModifiedBy(lastModifiedBy)
                 .createdAt(createdAt).lastModifiedAt(lastModifiedAt)
                 .viewCnt(viewCnt)
