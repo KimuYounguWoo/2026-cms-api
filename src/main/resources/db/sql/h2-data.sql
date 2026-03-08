@@ -54,3 +54,6 @@ INSERT INTO CONTENTS (USER_ID, TITLE, DESCRIPTION, VIEW_COUNT, CREATED_BY, CREAT
                                                                                                                                    (2, 'title_t2y3u4i5o6p7', 'description_a8s9d0f1g2h3', 17, 'user2', '2026-02-25 16:00:00', 'user2', '2026-02-26 11:45:00'),
                                                                                                                                    (1, 'title_j4k5l6z7x8c9', 'description_v0b1n2m3q4w5', 2, 'user', '2026-02-26 13:10:00', 'user', '2026-02-26 15:30:00'),
                                                                                                                                    (2, 'title_e6r7t8y9u0i1', 'description_o2p3a4s5d6f7', 44, 'user2', '2026-02-26 18:25:00', 'user2', '2026-02-27 09:10:00');
+
+ALTER TABLE USERS ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM users);
+ALTER TABLE CONTENTS ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM CONTENTS);
